@@ -1,0 +1,39 @@
+version: '3'
+services:
+  lb:
+    build:
+      context: nginx
+      dockerfile: Dockerfile
+    ports:
+      - "9090:9090"
+    networks:
+      - my-network
+    depends_on:
+      - service-instance-1
+      - service-instance-2
+
+  service-instance-1:
+    build:
+      context: service
+      dockerfile: Dockerfile
+    environment:
+      HELLO_MESSAGE: 'Hello from instance 1'
+    ports:
+      - "8181:8080"
+    networks:
+      - my-network
+
+  service-instance-2:
+    build:
+      context: service
+      dockerfile: Dockerfile
+    environment:
+      HELLO_MESSAGE: 'Hello from instance 2'
+    ports:
+      - "8282:8080"
+    networks:
+      - my-network
+
+networks:
+  my-network:
+    driver: bridge

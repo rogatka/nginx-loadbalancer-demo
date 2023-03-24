@@ -1,0 +1,1 @@
+helloMessage: ${HELLO_MESSAGE:hello}
